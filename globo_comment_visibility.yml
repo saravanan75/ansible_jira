@@ -1,0 +1,21 @@
+---
+- name: Integrate Ansible with Jira
+  hosts: localhost
+  vars_files:
+    - secrets.yml
+    - comments.yml
+  vars:
+    jirauri: "https://globomantics.atlassian.net"
+  tasks:
+    - name: Create a Jira Issue
+      community.general.jira:
+        uri: '{{jirauri}}'
+        username: '{{username}}'
+        password: '{{password}}'
+        project: IP
+        operation: comment
+        comment: '{{comment}}'
+        comment_visibility:
+          type: group
+          value: managers
+        issue: IP-7

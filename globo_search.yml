@@ -1,0 +1,21 @@
+---
+- name: Integrate Ansible with Jira
+  hosts: localhost
+  vars_files:
+    - secrets.yml
+  vars:
+    jirauri: "https://globomantics.atlassian.net"
+  tasks:
+    - name: Create a Jira Issue
+      community.general.jira:
+        uri: '{{jirauri}}'
+        username: '{{username}}'
+        password: '{{password}}'
+        project: IP
+        operation: search
+        jql: project=IP AND assignee is EMPTY
+        issuetype: Task
+      args:
+        fields:
+            summary: null
+            created: null
